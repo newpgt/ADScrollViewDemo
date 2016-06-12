@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jsu-dM-psL">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ADScrollViewDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trl-0l-Qyz" customClass="ADScrollerView" customModule="ADScrollViewDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="600" height="218"/>
+                                <color key="backgroundColor" red="0.85968258460000002" green="0.86175881409999999" blue="0.85849174260000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="trl-0l-Qyz" secondAttribute="height" multiplier="300:109" id="uEY-48-h4g"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="trl-0l-Qyz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HPw-Lq-SmN"/>
+                            <constraint firstAttribute="trailing" secondItem="trl-0l-Qyz" secondAttribute="trailing" id="b1R-RX-VoZ"/>
+                            <constraint firstItem="trl-0l-Qyz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="vm3-xm-cpB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jZt-BR-TBj">
+                        <barButtonItem key="rightBarButtonItem" title="Leave View" id="mZg-qB-Wgb">
+                            <connections>
+                                <segue destination="f9H-Jx-ltA" kind="show" id="ADX-D5-Sxv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="adScrollerView" destination="trl-0l-Qyz" id="Ts4-ir-thS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1092" y="316"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AIe-dx-aWO">
+            <objects>
+                <viewController id="f9H-Jx-ltA" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NEf-VK-fix"/>
+                        <viewControllerLayoutGuide type="bottom" id="lkx-FO-rSp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SXY-sT-Bqs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dE0-ua-D7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1815" y="321"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="H4l-ec-2PS">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jsu-dM-psL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vbi-6G-t6z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="oIb-xl-Hyx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WrI-Dw-UVI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="336" y="-376"/>
+        </scene>
+    </scenes>
+</document>
