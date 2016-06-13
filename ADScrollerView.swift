@@ -28,8 +28,6 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
     
     private let originFrame: CGRect
     
-    //var titleArray = [String]()
-    
     private var currentDisplyedPage : Int {
         get{
             return pagecontrol.currentPage
@@ -110,7 +108,6 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         super.init(coder: aDecoder)
 
         initialFunc()
-        
     }
     
     private func initialFunc() {
@@ -144,7 +141,6 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
             view.removeFromSuperview()
         }
         attachImageView(rect)
- 
     }
     
     private func setupADFrame(rect: CGRect) {
@@ -166,10 +162,12 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
             if let urlString = imageArray[i][imageKey] where urlString.characters.count > 0 {
                 if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
                     imgView.kf_showIndicatorWhenLoading = true
-                    imgView.kf_setImageWithURL(NSURL(string: urlString)!, placeholderImage: UIImage(named: "imagePlaceHolder"), optionsInfo: nil, progressBlock: { (receivedSize, totalSize) in
+                    imgView.kf_setImageWithURL(NSURL(string: urlString)!, placeholderImage: UIImage(named: "imagePlaceHolder"), optionsInfo: nil, progressBlock: { [weak self](receivedSize, totalSize) in
                         //print("loading...")
-                        }, completionHandler: { (image, error, cacheType, imageURL) in
+
+                        }, completionHandler: { [weak self](image, error, cacheType, imageURL) in
                             //print("completionHandler...")
+
                     })
                 }else{
                     imgView.image = UIImage(named: urlString)
@@ -207,18 +205,14 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         let viewsize = scrollView.bounds.size
         let horizontalPage = max(0.0, contentOffset.x / viewsize.width)
         return Int(horizontalPage)
-        
     }
     
     internal func moveImage() {
-
         if currentDisplyedPage < imageArray.count - 1 {
             currentDisplyedPage += 1
         }else{
             currentDisplyedPage = 0
-            
         }
-        
         self.scrollerView.setContentOffset(CGPointMake(pageRollingWidth * CGFloat(currentDisplyedPage), 0), animated: true)
     }
     
