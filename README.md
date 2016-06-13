@@ -1,4 +1,4 @@
-# ADScrollViewDemo
+# 异步网络加载无限循环广告图片滚动。Swift 2.3
 # Ad-banner-like image scrolled view with timer on iOS written in Swift 2.3
 
 
