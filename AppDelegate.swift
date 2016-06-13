@@ -3,7 +3,7 @@
 //  ADScrollViewDemo
 //
 //  Created by NeoZ on 12/6/16.
-//  Copyright © 2016年 NeoZ. All rights reserved.
+//  Copyright © 2016 NeoZ. All rights reserved.
 //
 
 import UIKit

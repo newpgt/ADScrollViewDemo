@@ -3,7 +3,7 @@
 //  NZImageShowDemo
 //
 //  Created by NeoZ on 11/6/16.
-//  Copyright © 2016年 NeoZ. All rights reserved.
+//  Copyright © 2016 NeoZ. All rights reserved.
 //
 
 import UIKit
@@ -15,6 +15,9 @@ import Kingfisher
 
 let timeInterval = 3.0
 
+let imageKey = "image"
+let titleKey = "title"
+
 class ADScrollerView: UIView, UIScrollViewDelegate {
 
     private var moveTimer : NSTimer? = nil
@@ -25,7 +28,7 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
     
     private let originFrame: CGRect
     
-    var titleArray = [String]()
+    //var titleArray = [String]()
     
     private var currentDisplyedPage : Int {
         get{
@@ -33,18 +36,18 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         }set{
             pagecontrol.currentPage = newValue
             
-            if currentDisplyedPage < titleArray.count {
-                titleLabel.text = titleArray[currentDisplyedPage]
+            if let titleString = imageArray[currentDisplyedPage][titleKey] where titleString.characters.count > 0 {
+                titleLabel.text = titleString
             }else{
-                titleLabel.text = "untitled"
+                titleLabel.text = "Untitled"
             }
         }
     }
 
-    var imageArray = [String]() {
+    var imageArray = [[String: String]]() {
         didSet{
             pagecontrol.numberOfPages = imageArray.count
-            //currentDisplyedPage = 0
+            currentDisplyedPage = 0
         }
     }
     
@@ -79,7 +82,7 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         label.font = UIFont.systemFontOfSize(15.0)
         label.textColor = UIColor.grayColor()
         //label.backgroundColor = UIColor.whiteColor()
-        label.alpha = 0.6
+        label.alpha = 0.8
         
         return label
     }()
@@ -148,7 +151,7 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         scrollerView.frame = rect
         pageRollingWidth = rect.size.width
         scrollerView.contentSize = CGSizeMake(rect.size.width * CGFloat(imageArray.count), rect.size.height)
-        titleLabel.frame = CGRectMake(10, rect.size.height - 40, rect.size.width - 20, 20)
+        titleLabel.frame = CGRectMake(10, 10, rect.size.width - 20, 20)
         pagecontrol.center = CGPointMake(rect.size.width / 2, rect.size.height - 10)
     }
     
@@ -160,8 +163,7 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
             imgView.backgroundColor = UIColor.clearColor()
             imgView.clipsToBounds = true
             
-            let urlString = imageArray[i]
-            if urlString.characters.count > 0 {
+            if let urlString = imageArray[i][imageKey] where urlString.characters.count > 0 {
                 if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
                     imgView.kf_showIndicatorWhenLoading = true
                     imgView.kf_setImageWithURL(NSURL(string: urlString)!, placeholderImage: UIImage(named: "imagePlaceHolder"), optionsInfo: nil, progressBlock: { (receivedSize, totalSize) in
