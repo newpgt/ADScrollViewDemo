@@ -71,6 +71,7 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         view.scrollEnabled = true
         view.clipsToBounds = true
         view.bounces = false
+        //view.alwaysBounceVertical = true
         
         return view
     }()
@@ -100,25 +101,28 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         pageRollingWidth = frame.size.width
         
         super.init(frame: frame)
-        initialFunc()
+        initialFunc(frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.originFrame = aDecoder.decodeCGRectForKey("originFrame")
         super.init(coder: aDecoder)
 
-        initialFunc()
+        initialFunc(frame)
     }
     
-    private func initialFunc() {
+    private func initialFunc(rect: CGRect) {
+        self.autoresizesSubviews = true
+        self.clipsToBounds = true
+        
         self.addSubview(scrollerView)
         self.addSubview(pagecontrol)
         self.addSubview(titleLabel)
         
-        self.contentMode = .Redraw
         scrollerView.delegate = self
         
         setupTimer()
+
     }
     
     internal func imagePressed(sender: UIGestureRecognizer) {
@@ -136,19 +140,39 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
 
     override func drawRect(rect: CGRect) {
         setupADFrame(rect)
-        
-        for view in scrollerView.subviews {
-            view.removeFromSuperview()
-        }
+
         attachImageView(rect)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        scrollerView.frame = self.bounds
+        
+        pageRollingWidth = scrollerView.frame.size.width
+        
+        pagecontrol.center = CGPointMake(scrollerView.frame.size.width / 2, scrollerView.frame.size.height - 10)
+        
+        var i = 0
+        for view in scrollerView.subviews {
+            if let imgView = view as? UIImageView {
+                imgView.frame = CGRectMake(scrollerView.frame.size.width * CGFloat(i), 0, scrollerView.frame.size.width, scrollerView.frame.size.height)
+                i += 1
+            }
+
+        }
+        
+        self.scrollerView.setContentOffset(CGPointMake(pageRollingWidth * CGFloat(currentDisplyedPage), 0), animated: false)
+
+    }
+ 
     private func setupADFrame(rect: CGRect) {
         scrollerView.frame = rect
         pageRollingWidth = rect.size.width
         scrollerView.contentSize = CGSizeMake(rect.size.width * CGFloat(imageArray.count), rect.size.height)
         titleLabel.frame = CGRectMake(10, 10, rect.size.width - 20, 20)
         pagecontrol.center = CGPointMake(rect.size.width / 2, rect.size.height - 10)
+        
     }
     
     private func attachImageView(rect: CGRect) {
