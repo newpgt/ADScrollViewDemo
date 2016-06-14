@@ -46,6 +46,8 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         didSet{
             pagecontrol.numberOfPages = imageArray.count
             currentDisplyedPage = 0
+            
+            attachImageView(self.bounds)
         }
     }
     
@@ -71,7 +73,6 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         view.scrollEnabled = true
         view.clipsToBounds = true
         view.bounces = false
-        //view.alwaysBounceVertical = true
         
         return view
     }()
@@ -139,15 +140,17 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
     }
 
     override func drawRect(rect: CGRect) {
-        setupADFrame(rect)
 
-        attachImageView(rect)
+        //attachImageView(rect)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        titleLabel.frame = CGRectMake(10, 10, self.bounds.size.width - 20, 20)
+        
         scrollerView.frame = self.bounds
+        scrollerView.contentSize = CGSizeMake(self.bounds.size.width * CGFloat(imageArray.count), self.bounds.size.height)
         
         pageRollingWidth = scrollerView.frame.size.width
         
@@ -165,16 +168,7 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
         self.scrollerView.setContentOffset(CGPointMake(pageRollingWidth * CGFloat(currentDisplyedPage), 0), animated: false)
 
     }
- 
-    private func setupADFrame(rect: CGRect) {
-        scrollerView.frame = rect
-        pageRollingWidth = rect.size.width
-        scrollerView.contentSize = CGSizeMake(rect.size.width * CGFloat(imageArray.count), rect.size.height)
-        titleLabel.frame = CGRectMake(10, 10, rect.size.width - 20, 20)
-        pagecontrol.center = CGPointMake(rect.size.width / 2, rect.size.height - 10)
-        
-    }
-    
+
     private func attachImageView(rect: CGRect) {
         for i in 0 ..< imageArray.count {
             
@@ -186,10 +180,10 @@ class ADScrollerView: UIView, UIScrollViewDelegate {
             if let urlString = imageArray[i][imageKey] where urlString.characters.count > 0 {
                 if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
                     imgView.kf_showIndicatorWhenLoading = true
-                    imgView.kf_setImageWithURL(NSURL(string: urlString)!, placeholderImage: UIImage(named: "imagePlaceHolder"), optionsInfo: nil, progressBlock: { [weak self](receivedSize, totalSize) in
+                    imgView.kf_setImageWithURL(NSURL(string: urlString)!, placeholderImage: UIImage(named: "imagePlaceHolder"), optionsInfo: nil, progressBlock: { (receivedSize, totalSize) in
                         //print("loading...")
 
-                        }, completionHandler: { [weak self](image, error, cacheType, imageURL) in
+                        }, completionHandler: { (image, error, cacheType, imageURL) in
                             //print("completionHandler...")
 
                     })
