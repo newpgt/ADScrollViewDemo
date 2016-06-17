@@ -1,6 +1,8 @@
 # 异步网络加载无限循环广告图片滚动。Swift 2.3
 # Ad-banner-like image scrolled view with timer on iOS written in Swift 2.3
 
+NOT Objective- c
+Github detected as the wrong language 
 
 This demo app shows the simple use of slide show images. Remote images loading uses Kingfisher Framework.
 
